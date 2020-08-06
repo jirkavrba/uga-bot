@@ -18,4 +18,6 @@ RUN mvn package -DskipTests
 FROM openjdk:8-jre-alpine
 COPY --from=build /app/target/UgaBot-1.0-SNAPSHOT.jar /app/UgaBot.jar
 
-ENTRYPOINT ["java", "-jar", "/app/UgaBot.jar"]
+ENV DISCORD_TOKEN ${DISCORD_TOKEN}
+
+ENTRYPOINT java -jar /app/UgaBot.jar $DISCORD_TOKEN
