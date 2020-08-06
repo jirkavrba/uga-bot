@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  uga-bot-mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=uga_bot
+      - MYSQL_USER=uga_bot
+      - MYSQL_PASSWORD=uga_bot
+    ports:
+      - 3308:3306
+
+  uga-bot-app:
+    build: .
+    restart: on-failure
+    depends_on:
+      - uga-bot-mysql
+    ports:
+    - 8080:8080
+    environment:
+    - DATABASE_HOST=uga-bot-mysql
+    - DATABASE_USER=uga_bot
+    - DATABASE_PASSWORD=uga_bot
+    - DATABASE_NAME=uga_bot
+    - DATABASE_PORT=3308
